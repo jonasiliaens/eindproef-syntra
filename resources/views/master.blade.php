@@ -28,6 +28,8 @@
 	
 	<div class="container boven">
 
+		@include('flash::message')
+
 		@yield('content')
 		
 		@include('partials.footer')
@@ -39,6 +41,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	@yield('autoplayacrousel')
 	@yield('maps')
+	@yield('flashscript')
 
 </body>
 </html>

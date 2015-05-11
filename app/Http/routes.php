@@ -30,8 +30,7 @@ Route::post('/contact', 'PagesController@processcontact');
 
 Route::get('/admin', 'PagesController@admin');
 
-Route::get('/producten', 'ProductsController@index');
-Route::get('/producten/productid12', 'ProductsController@show');
+Route::resource('producten', 'ProductsController');
 
 Route::resource('profiel', 'ProfileController');
 

@@ -5,6 +5,13 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model {
 
 	/**
+	 * The database table used by the model.
+	 * 
+	 * @var string
+	 */
+	protected $table = 'countries';
+
+	/**
 	 * The fields that that are mass assignable.
 	 * 
 	 * @var [type]
@@ -12,13 +19,6 @@ class Country extends Model {
 	protected $fillable = [
 		'country'
 	];
-
-	/**
-	 * The database table used by the model.
-	 * 
-	 * @var string
-	 */
-	protected $table = 'countries';
 
 	/**
 	 * A Country has many addresses

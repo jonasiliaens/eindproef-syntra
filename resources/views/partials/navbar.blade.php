@@ -18,9 +18,6 @@
 				<li><a href="{{ url('/trainingen') }}">Trainingen</a></li>
 				<li><a href="{{ url('/about-us') }}">About Us</a></li>
 				<li><a href="{{ url('/contact') }}">Contact</a></li>
-				@if (Auth::user()['user_type'] === 0)
-					<li><a href="{{ url('/admin') }}">Admin</a></li>
-				@endif
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">

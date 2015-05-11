@@ -6,6 +6,13 @@ use App\User;
 class Address extends Model {
 
 	/**
+	 * The database table used by the model.
+	 * 
+	 * @var string
+	 */
+	protected $table = 'addresses';
+
+	/**
 	 * The fields that that are mass assignable.
 	 * 
 	 * @var [type]
@@ -17,13 +24,6 @@ class Address extends Model {
 		'town_id',
 		'country_id'
 	];
-
-	/**
-	 * The database table used by the model.
-	 * 
-	 * @var string
-	 */
-	protected $table = 'addresses';
 
 	/**
 	 * An address belongs to one User.

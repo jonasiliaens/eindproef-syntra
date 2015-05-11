@@ -110,6 +110,17 @@ h1 {
   color: #F26110;
 }
 
+.adminbar {
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 0px;
+  margin-top: 20px;
+}
+
+.alert {
+  margin-top: 10px;
+}
+
 .cart {
   width: 24px;
 }

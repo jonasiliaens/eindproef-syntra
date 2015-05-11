@@ -2,14 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Town extends Model {
+class Product extends Model {
 
 	/**
 	 * The database table used by the model.
 	 * 
 	 * @var string
 	 */
-	protected $table = 'towns';
+	protected $table = 'products';
 
 	/**
 	 * The fields that that are mass assignable.
@@ -17,18 +17,10 @@ class Town extends Model {
 	 * @var [type]
 	 */
 	protected $fillable = [
-		'postcode',
-		'town'
+		'name',
+		'description',
+		'imagePath',
+		'price',
 	];
-
-	/**
-	 * A Town has many addresses
-	 * 
-	 * @return [type] [description]
-	 */
-	public function addresses()
-	{
-		return $this->hasMany('App\Address');
-	}
 
 }

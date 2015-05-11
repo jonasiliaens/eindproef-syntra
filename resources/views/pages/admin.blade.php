@@ -12,7 +12,7 @@
 <div class="row">
 	<div class="col-md-6">
 		<h2>Producten Aanpassen:</h2>
-		<button type="submit" class="btn btn-primary knop">Producten toevoegen</button>
+		<a href="{{ url('/producten/create') }}"><button type="submit" class="btn btn-primary knop">Producten toevoegen</button></a>
 		<button type="submit" class="btn btn-primary knop">Producten wijzigen/verwijderen</button>
 	</div>
 
