@@ -30,13 +30,21 @@ Route::post('/contact', 'PagesController@processcontact');
 
 Route::get('/admin', 'PagesController@admin');
 
+Route::get('producten/list', 'ProductsController@list');
 Route::resource('producten', 'ProductsController');
 
 Route::resource('profiel', 'ProfileController');
 
 Route::get('/winkelmandje', 'WinkelmandController@basket');
 
+Route::get('/test', function()
+{
+	$image = Image::make(file_get_contents('http://bloemennederland.nl/wp-content/uploads/2009/10/Waterlelie.jpg'));
 
+	$image->widen(400);
+
+	return $image->response();
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

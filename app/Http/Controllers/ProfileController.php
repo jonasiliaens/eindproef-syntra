@@ -24,11 +24,6 @@ class ProfileController extends Controller {
 	{
 		$user = Auth::user();
 
-		if ($user['address_id'] === 0)
-		{	
-			$user->address()->create();
-		}
-
 		return view('users.profile', compact('user'));
 	}
 
@@ -36,6 +31,7 @@ class ProfileController extends Controller {
 	{
 		Auth::user()->update($request->all());
 
+		
 		return redirect('profiel');
 
 	}

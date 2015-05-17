@@ -62,7 +62,7 @@
   </div>
   
   <div class="col-md-3">
-    <img src="img/wim.jpg" alt="" class="img-responsive kolombreedte">
+    <img src="img/wim.jpg" alt="" class="img-responsive">
   </div>
   
   <div class="col-md-3">

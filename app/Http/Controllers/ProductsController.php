@@ -1,46 +1,76 @@
 <?php namespace App\Http\Controllers;
 
 use App\Product;
+use App\Category;
+use App\Brand;
+use App\Material;
+use App\Size;
+use App\Color;
 use App\Http\Requests;
 use App\Http\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class ProductsController extends Controller {
 
 	/**
-	 * Display a listing of the products.
+	 * Display a listing of the products for the customer or for the admin.
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		return view('products.products');
+		if (Auth::user()['user_type'] === 0)
+		{
+			$products 	=	Product::latest('created_at')->get();
+			return view('products.list', compact('products'));
+		}
+		else
+		{
+			return view('products.products');
+		}
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Show the form for creating a new product.
 	 *
 	 * @return Response
 	 */
 	public function create()
-	{
-		return view('products.create');
+	{	
+		$categories = Category::lists('category', 'id');
+		$brands 	= Brand::lists('brand', 'id');
+		$materials 	= Material::lists('material', 'id');
+		$sizes		= Size::lists('size', 'id');
+		$colors		= Color::lists('color', 'id');
+
+		return view('products.create', compact('categories', 'brands', 'materials', 'sizes', 'colors'));
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a newly created product in the database.
 	 *
 	 * @return Response
 	 */
 	public function store(ProductRequest $request)
 	{	
-		Product::create($request->all());
+		// $image = \Image::make($request['productimage']->getRealPath());
+
+		// $image->widen(400);
+
+		// return $image->response();
+
+		$product = Product::create($request->all());
+
+		$product->sizes()->attach($request->input('size_list'));
+
+		$product->colors()->attach($request->input('color_list'));
 
 		flash()->success('Uw product ' . $request['name'] . ' is succesvol toegevoegd!');
 
-		return view('products.create');
+		return redirect('admin');
 	}
 
 	/**
@@ -60,20 +90,32 @@ class ProductsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
-		//
+	public function edit(Product $product)
+	{	
+		$categories = Category::lists('category', 'id');
+		$brands 	= Brand::lists('brand', 'id');
+		$materials 	= Material::lists('material', 'id');
+		$sizes		= Size::lists('size', 'id');
+		$colors		= Color::lists('color', 'id');
+
+		return view('products.edit', compact('product', 'categories', 'materials', 'brands', 'sizes', 'colors'));
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Update the specified product in the database.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Product $product, ProductRequest $request)
 	{
-		//
+		$product->update($request->all());
+
+		$product->sizes()->sync($request->input('size_list'));
+
+		$product->colors()->sync($request->input('color_list'));
+
+		return redirect('admin');
 	}
 
 	/**

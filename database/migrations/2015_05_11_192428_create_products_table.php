@@ -19,6 +19,9 @@ class CreateProductsTable extends Migration {
 			$table->text('description');
 			$table->string('imagePath');
 			$table->decimal('price', 6, 2);
+			$table->integer('category_id')->unsigned();
+			$table->integer('brand_id')->unsigned();
+			$table->integer('material_id')->unsigned();
 			$table->timestamps();
 		});
 	}

@@ -11,38 +11,40 @@
 
 @include('errors.list')
 
-<div class="col-md-6">
   {!! Form::open(['url' => 'producten']) !!}
-    <div class="form-group">
-      {!! Form::label('name', 'Naam Product:') !!}
-      {!! Form::text('name', null, ['class' => 'form-control']) !!}
-    </div>
 
-    <div class="form-group">
-      {!! Form::label('description', 'Beschrijving:') !!}
-      {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
-    </div>
+    @include('products.form', ['submitbuttonText' => 'Product toevoegen'])
 
-    <div class="form-group">
-      {!! Form::label('imagePath', 'Afbeelding:') !!}
-      {!! Form::text('imagePath', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-      {!! Form::label('price', 'Prijs:') !!}
-      {!! Form::text('price', null, ['class' => 'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-      {!! Form::submit('Product Opslaan', ['class' => 'btn btn-primary form-control knop']) !!}
-    </div>
   {!! Form::close() !!}
-</div>
 
 @endsection
 
-@section('flashscript')
+@section('script')
   <script>
-    $('div.alert').not('.alert-important').delay(4000).slideUp(300);
+    $("#category_id").prop("selectedIndex", -1);
+    $('#category_id').select2({
+      placeholder: 'Kies een categorie',
+      allowClear: true
+    });
+
+    $("#brand_id").prop("selectedIndex", -1);
+    $('#brand_id').select2({
+      placeholder: 'Kies een merk',
+      allowClear: true
+    });
+
+    $("#material_id").prop("selectedIndex", -1);
+    $('#material_id').select2({
+      placeholder: 'Kies een materiaal',
+      allowClear: true
+    });
+
+    $('#size_list').select2({
+      placeholder: 'Selecteer in welke maten het product beschikbaar is'
+    });
+
+    $('#color_list').select2({
+      placeholder: 'Selecteer in welke kleuren het product beschikbaar is'
+    });
   </script>
 @endsection

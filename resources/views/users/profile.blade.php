@@ -27,6 +27,15 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-md-6">
+        <div class="form-group">
+          {!! Form::label('street', 'Straat:') !!}
+          {!! Form::text('street', null, ['class' => 'form-control']) !!}
+        </div>    
+  </div>
+</div>
+
 
 <div class="row">
   <div class="col-md-6">

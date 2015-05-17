@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
 
 class AuthController extends Controller {
 
@@ -51,6 +52,9 @@ class AuthController extends Controller {
 
 	public function postRegister(Request $request)
 	{
+		$address = Address::create(['street' => '']);
+		$request['address_id'] = $address->id;
+
     	$validator = $this->registrar->validator($request->all());
 
 		if ($validator->fails())
@@ -62,8 +66,63 @@ class AuthController extends Controller {
 
 		$this->auth->login($this->registrar->create($request->all()));
 
+		flash()->overlay('Welkom ' . $request['name'] . ', u bent succesvol geregistreerd!', "Welkom op Alive'n Kicking");
+
 
 		return redirect($this->redirectPath());
+	}
+
+
+	/**
+	 * Handle a login request to the application.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function postLogin(Request $request)
+	{
+		$this->validate($request, [
+			'email' => 'required|email', 'password' => 'required',
+		]);
+
+		$credentials = $request->only('email', 'password');
+
+		if ($this->auth->attempt($credentials, $request->has('remember')))
+		{
+			flash()->success('U bent ingelogd, welkom terug ' . Auth::user()->name . '!');
+
+			return redirect()->intended($this->redirectPath());
+		}
+
+		return redirect($this->loginPath())
+					->withInput($request->only('email', 'remember'))
+					->withErrors([
+						'email' => $this->getFailedLoginMessage(),
+					]);
+	}
+
+	/**
+	 * Get the failed login message.
+	 *
+	 * @return string
+	 */
+	protected function getFailedLoginMessage()
+	{
+		return 'Deze gegevens komen niet overéén met onze gegevens. Probeer opnieuw of registreer.';
+	}
+
+	/**
+	 * Log the user out of the application.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function getLogout()
+	{
+		$this->auth->logout();
+
+		flash()->success('U bent uitgelogd, tot de volgende keer!');
+
+		return redirect('/');
 	}
 
 }

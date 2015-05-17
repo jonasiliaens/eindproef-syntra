@@ -22,14 +22,14 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
+							<label class="col-md-4 control-label">E-Mail Adres:</label>
 							<div class="col-md-6">
 								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Paswoord</label>
+							<label class="col-md-4 control-label">Paswoord:</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password">
 							</div>

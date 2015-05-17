@@ -9,6 +9,7 @@
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 	<link rel="icon" type="image/png" href="{{ asset('/img/favicon.png') }}" />
+	<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -23,25 +24,31 @@
 <body>
 	
 	@include('partials.navbar')
+
+	@include('flash::message')
 	
 	@yield('carousel')	
 	
 	<div class="container boven">
 
-		@include('flash::message')
-
 		@yield('content')
-		
-		@include('partials.footer')
 
 	</div>
+
+	@include('partials.footer')
 
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+	<script>
+    	$('div.alert').not('.alert-important').delay(4000).slideUp(300);
+
+    	$('#flash-overlay-modal').modal();
+	</script>
 	@yield('autoplayacrousel')
 	@yield('maps')
-	@yield('flashscript')
+	@yield('script')
 
 </body>
 </html>

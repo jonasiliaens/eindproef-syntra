@@ -8,7 +8,7 @@
 				<div class="panel-heading">Registreer</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
-						<div class="alert alert-danger">
+						<div class="alert alert-danger alert-important">
 							<strong>Oeps!</strong> Er is een probleem met de gegevens die u heeft ingevuld.<br><br>
 							<ul>
 								@foreach ($errors->all() as $error)
@@ -22,28 +22,28 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Voornaam</label>
+							<label class="col-md-4 control-label">Voornaam:</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Adres</label>
+							<label class="col-md-4 control-label">E-Mail Adres:</label>
 							<div class="col-md-6">
 								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Paswoord</label>
+							<label class="col-md-4 control-label">Paswoord:</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Bevestig Paswoord</label>
+							<label class="col-md-4 control-label">Bevestig Paswoord:</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password_confirmation">
 							</div>
