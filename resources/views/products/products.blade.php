@@ -1,5 +1,9 @@
 @extends('master')
 
+@section('navbar')
+  @include('partials.navbar')
+@endsection
+
 @section('content')
 
 <div class="row">
@@ -47,7 +51,7 @@
 	<div class="col-md-3 product">
       	<a href="{{ url('/producten/productid12') }}"><img src="img/products/retro_1.jpg" alt="img"></a>
        	<div class="price"><p>€92,50</p></div>
-        <a href="{{ url('/producten/productid12') }}"><h4>Twins Retro Bokshandschoenen</h4></a>
+        <a href="{{ url('/producten/product/12') }}"><h4>Twins Retro Bokshandschoenen</h4></a>
        	<button type="submit" class="btn btn-primary knop">In Winkelmandje</button>
        	<hr>
        	<h4>Xprt No Fear Kickbox Broek Zwart</h4>

@@ -52,9 +52,6 @@ class AuthController extends Controller {
 
 	public function postRegister(Request $request)
 	{
-		$address = Address::create(['street' => '']);
-		$request['address_id'] = $address->id;
-
     	$validator = $this->registrar->validator($request->all());
 
 		if ($validator->fails())
@@ -65,6 +62,10 @@ class AuthController extends Controller {
 		}
 
 		$this->auth->login($this->registrar->create($request->all()));
+
+		$address = new Address;
+		$address->user_id = Auth::user()->id;
+		$address->save();
 
 		flash()->overlay('Welkom ' . $request['name'] . ', u bent succesvol geregistreerd!', "Welkom op Alive'n Kicking");
 

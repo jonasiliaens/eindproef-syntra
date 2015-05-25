@@ -115,7 +115,8 @@ class ProductsController extends Controller {
 
 		$product->colors()->sync($request->input('color_list'));
 
-		return redirect('admin');
+		$products 	=	Product::latest('created_at')->get();
+		return view('products.list', compact('products'));
 	}
 
 	/**
@@ -124,9 +125,31 @@ class ProductsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy(Product $product)
 	{
-		//
+		$product->delete();
+
+		flash()->success('Uw product "' . $product['name'] . '" is verwijderd');
+
+		$products 	=	Product::latest('created_at')->get();
+		return view('products.list', compact('products'));
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function delete($id)
+	{	
+		$product = Product::findOrFail($id);
+		$product->delete($id);
+
+		flash()->success('Uw product "' . $product['name'] . '" is verwijderd');
+
+		$products 	=	Product::latest('created_at')->get();
+		return view('products.list', compact('products'));
 	}
 
 	/**

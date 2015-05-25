@@ -1,13 +1,16 @@
 @extends('master')
 
+@section('navbar')
+  @include('partials.navbar')
+@endsection
+
+
 @if (Auth::user()['user_type'] === 0)
     @include('partials.adminbar')       
 @endif
 
 @section('carousel')
-
   @include('partials.carousel')
-
 @endsection
 
 @section('content')

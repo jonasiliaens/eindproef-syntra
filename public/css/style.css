@@ -1,3 +1,5 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
 @font-face {
     font-family: 'thailandesaregular';
     src: url('../fonts/THAILAND-webfont.eot');
@@ -208,7 +210,7 @@ h1 {
 .knop:hover {
   background-color: #F26110;
   color: #3b4758;
-} 
+}
 
 .panel .panel-heading {
   background-color: #3b4758;
@@ -306,6 +308,24 @@ h1 {
 
 .pricepro {
   text-align: right;
+}
+
+.icon:before
+{
+  font-family: 'FontAwesome', sans-serif;
+  font-size: 16px;
+}
+
+.edit>a
+{
+  color:green;
+  text-decoration:none;
+}
+
+.delete>a
+{
+  float:right;
+  color: red;
 }
 
 .footer {

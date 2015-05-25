@@ -1,5 +1,9 @@
 @extends('master')
 
+@section('navbar')
+  @include('partials.adminnavbar')
+@endsection
+
 @section('content')
 
 <div class="row">
@@ -30,7 +34,7 @@
     <strong>Merk:</strong>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-1">
     <strong>Materiaal:</strong>
   </div>
 </div>
@@ -57,8 +61,20 @@
       {{ $product->brand->brand }}
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-1">
       {{ $product->material->material }}
+    </div>
+
+    <div class="col-md-1">
+      
+        <a href="{{ URL::action('ProductsController@edit', $product->id) }}">Bewerken</a>
+      
+        <a href="{{ url('/producten/delete', $product->id) }}">Verwijderen</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <hr>
     </div>
   </div>
 @endforeach

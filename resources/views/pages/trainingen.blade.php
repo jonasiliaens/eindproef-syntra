@@ -1,5 +1,9 @@
 @extends('master')
 
+@section('navbar')
+  @include('partials.navbar')
+@endsection
+
 @section('content')
 
 <div class="row">

@@ -30,7 +30,7 @@ Route::post('/contact', 'PagesController@processcontact');
 
 Route::get('/admin', 'PagesController@admin');
 
-Route::get('producten/list', 'ProductsController@list');
+Route::get('producten/delete/{id}', 'ProductsController@delete');
 Route::resource('producten', 'ProductsController');
 
 Route::resource('profiel', 'ProfileController');

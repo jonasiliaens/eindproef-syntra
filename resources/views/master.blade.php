@@ -22,8 +22,10 @@
 	<![endif]-->
 </head>
 <body>
+
+	@yield('navbar')
 	
-	@include('partials.navbar')
+	
 
 	@include('flash::message')
 	

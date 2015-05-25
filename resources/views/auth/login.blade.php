@@ -1,5 +1,9 @@
 @extends('master')
 
+@section('navbar')
+  @include('partials.navbar')
+@endsection
+
 @section('content')
 <div class="container-fluid zak">
 	<div class="row">
@@ -8,7 +12,7 @@
 				<div class="panel-heading">Login</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
-						<div class="alert alert-danger">
+						<div class="alert alert-danger alert-important">
 							<strong>Oeps!</strong> Er is een probleem met de gegevens die u heeft ingevuld.<br><br>
 							<ul>
 								@foreach ($errors->all() as $error)
