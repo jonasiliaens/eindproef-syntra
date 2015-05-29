@@ -31,4 +31,9 @@ class Town extends Model {
 		return $this->hasMany('App\Address');
 	}
 
+	public function getLabelAttribute()
+	{
+	    return $this->postcode . ' ' . $this->town;
+	}
+
 }

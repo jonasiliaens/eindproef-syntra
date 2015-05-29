@@ -25,6 +25,21 @@
 
 @section('script')
   <script>
+    $('#category_id').select2({
+      placeholder: 'Kies een categorie',
+      allowClear: true
+    });
+
+    $('#brand_id').select2({
+      placeholder: 'Kies een merk',
+      allowClear: true
+    });
+
+    $('#material_id').select2({
+      placeholder: 'Kies een materiaal',
+      allowClear: true
+    });
+
     $('#size_list').select2({
       placeholder: 'Selecteer in welke maten het product beschikbaar is'
     });

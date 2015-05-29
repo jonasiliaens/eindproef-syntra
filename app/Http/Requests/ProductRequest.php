@@ -30,14 +30,14 @@ class ProductRequest extends Request {
 	public function rules()
 	{
 		return [
-			'name' 			=> 'required',
-			'description' 	=> 'required',
-			'price' 		=> 'required|numeric',
-			'category_id' 	=> 'required|numeric',
-			'brand_id'	 	=> 'required|numeric',
-			'material_id' 	=> 'required|numeric',
-			'size_list' 	=> 'required',
-			'color_list' 	=> 'required',
+			// 'name' 			=> 'required',
+			// 'description' 	=> 'required',
+			// 'price' 		=> 'required|numeric',
+			// 'category_id' 	=> 'required|numeric',
+			// 'brand_id'	 	=> 'required|numeric',
+			// 'material_id' 	=> 'required|numeric',
+			// 'size_list' 	=> 'required',
+			// 'color_list' 	=> 'required',
 			
 		];
 	}

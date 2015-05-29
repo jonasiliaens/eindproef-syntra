@@ -22,8 +22,8 @@ class ProfileRequest extends Request {
 	public function rules()
 	{
 		return [
-			'name' => 'required',
-			'lastname' => 'required'
+			'name' 				=> 'required',
+			'lastname' 			=> 'required'
 		];
 	}
 

@@ -15,7 +15,7 @@
 
 @include('errors.list')
 
-  {!! Form::open(['url' => 'producten']) !!}
+  {!! Form::open(['url' => 'producten', 'files'=>true]) !!}
 
     @include('products.form', ['submitbuttonText' => 'Product toevoegen'])
 

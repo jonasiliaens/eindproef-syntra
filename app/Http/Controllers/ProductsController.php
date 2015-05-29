@@ -22,14 +22,15 @@ class ProductsController extends Controller {
 	 */
 	public function index()
 	{
+		$products 	=	Product::latest('created_at')->get();
+
 		if (Auth::user()['user_type'] === 0)
 		{
-			$products 	=	Product::latest('created_at')->get();
 			return view('products.list', compact('products'));
 		}
 		else
 		{
-			return view('products.products');
+			return view('products.products', compact('products'));
 		}
 	}
 
@@ -56,11 +57,20 @@ class ProductsController extends Controller {
 	 */
 	public function store(ProductRequest $request)
 	{	
-		// $image = \Image::make($request['productimage']->getRealPath());
+		$image = \Image::make($request->file('productimage'));
 
-		// $image->widen(400);
+		$fileName = $request['name'];
+		$fileName = strtolower($fileName);
+		$fileName = str_replace(' ', '-', $fileName);
+		$fileName = $fileName . '-' . time() . '.jpg';
 
-		// return $image->response();
+		$imagePath = '/images/products/'.$fileName;
+
+		$image->fit(250);
+
+		$image->save(public_path() . $imagePath);
+
+		$request['imagePath'] = $imagePath;
 
 		$product = Product::create($request->all());
 
