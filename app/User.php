@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Address;
 
@@ -27,6 +28,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	protected $fillable = ['name', 'lastname', 'email', 'password', 'address_id'];
 
 	/**
+	 * Set if you want to use softDelete or not.
+	 * 
+	 * @var boolean
+	 */
+	use SoftDeletes;
+
+	protected $dates = ['deleted_at'];
+
+	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
@@ -41,6 +51,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function address()
 	{
 		return $this->hasOne('App\Address');
+	}
+
+	/**
+	 * A user can have many orders.
+	 * 
+	 * @return [type] [description]
+	 */
+	public function orders()
+	{
+		return $this->hasMany('App\Order');
 	}
 
 }

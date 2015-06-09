@@ -18,15 +18,15 @@ class BrandsTableSeeder extends Seeder {
 		]);
 
 		Brand::create([
-			'brand'	=>	'Windy'
+			'brand'	=>	'Venum'
 		]);
 
 		Brand::create([
-			'brand'	=>	'Adidas'
+			'brand'	=>	'Xprt'
 		]);
 
 		Brand::create([
-			'brand'	=>	'Nike'
+			'brand'	=>	'Booster'
 		]);
 	}
 

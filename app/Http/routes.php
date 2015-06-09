@@ -30,21 +30,22 @@ Route::post('/contact', 'PagesController@processcontact');
 
 Route::get('/admin', 'PagesController@admin');
 
+Route::get('gebruiker/delete/{id}', 'UsersController@delete');
+Route::resource('gebruikers', 'UsersController');
+
 Route::get('producten/delete/{id}', 'ProductsController@delete');
+Route::get('productlist', 'ProductsController@productlist');
 Route::resource('producten', 'ProductsController');
+
+Route::get('specifications', 'ProductsController@specifications');
+Route::get('specifications/{id}', 'ProductsController@specifications');
 
 Route::resource('profiel', 'ProfileController');
 
-Route::get('/winkelmandje', 'WinkelmandController@basket');
-
-Route::get('/test', function()
-{
-	$image = Image::make(file_get_contents('http://bloemennederland.nl/wp-content/uploads/2009/10/Waterlelie.jpg'));
-
-	$image->widen(400);
-
-	return $image->response();
-});
+Route::get('/winkelmandje', 'OrdersController@shoppingcart');
+Route::get('/winkelmandje/add/{id}', 'OrdersController@addToShoppingcart');
+Route::get('/winkelmandje/delete/all', 'OrdersController@deleteAllFromShoppingcart');
+Route::get('/winkelmandje/delete/{id}', 'OrdersController@deleteFromShoppingcart');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -8,11 +8,12 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<h1>Winkelmandje</h1>
+		<h1>Winkelmandje van {{ $user->name }} {{ $user->lastname }}</h1>
 		<hr>
 	</div>
 </div>
 
+@if (count($order))
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="basket">
@@ -24,22 +25,22 @@
                                     <th>Aantal:</th>
                                     <th>Prijs/stuk:</th>
                                     <th>Totaal:</th>
+                                    <th>Maat:</th>
+                                    <th><a href="{{ url('/winkelmandje/delete/all') }}">Wis Alle</a></th>
                               </tr>
                         </thead>
 
                         <tbody>
+                        @foreach ($products as $product)
                               <tr>
-                                    <td class="despro">Twins Retro Bokshandschoenen</td>
-                                    <td class="countpro">2</td>
-                                    <td class="pricepro">€92,50</td>
-                                    <td class="pricepro">€185</td>
-                              </tr>
-                              <tr>
-                                    <td>Booster Pro Range Zwart/Rood</td>
+                                    <td class="despro">{{ $product->name }}</td>
                                     <td class="countpro">1</td>
-                                    <td class="pricepro">€91</td>
-                                    <td class="pricepro">€91</td>
+                                    <td class="pricepro">€{{ $product->price }}</td>
+                                    <td class="pricepro">€{{ $product->price }}</td>
+                                    <td>{!! Form::select('size_list[]', $sizes, null, ['id' => 'size_list', 'class' => 'form-control']) !!}</td>
+                                    <td><a href="{{ url('/winkelmandje/delete', $product->id) }}">Wis</a></td>
                               </tr>
+                        @endforeach
                         </tbody>
 
                         <tfoot>
@@ -47,7 +48,7 @@
                                     <th>Totaal Bestelling:</th>
                                     <th></th>
                                     <th></th>
-                                    <th class="pricepro">€276</th>
+                                    <th class="pricepro">€{{ $order->total }}</th>
                               </tr>
                         </tfoot>
                   </table>
@@ -57,7 +58,12 @@
             </a>
       </div>
 </div>
+@else
+      <p>U heeft nog geen producten in uw winkelmandje.</p>
+@endif
 
 
+  
+  
 
 @endsection

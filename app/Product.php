@@ -96,4 +96,14 @@ class Product extends Model {
 		return $this->colors->lists('id');
 	}
 
+	/**
+	 * A product can be ordered many times.
+	 * 
+	 * @return [type] [description]
+	 */
+	public function orders()
+	{
+		return $this->belongsToMany('App\Order');
+	}
+
 }

@@ -56,6 +56,12 @@
 								<a class="btn btn-link" href="{{ url('/password/email') }}">Paswoord vergeten?</a>
 							</div>
 						</div>
+
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<a class="btn btn-link" href="{{ url('/auth/register') }}">Nog niet geregistreerd?</a>
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>

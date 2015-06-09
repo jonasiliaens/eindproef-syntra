@@ -16,13 +16,31 @@ use Auth;
 class ProductsController extends Controller {
 
 	/**
-	 * Display a listing of the products for the customer or for the admin.
+	 * Display a listing of the products for the customer.
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		$products 	=	Product::latest('created_at')->get();
+		$products 	= Product::latest('created_at')->get();
+		$brands 	= Brand::orderBy('brand', 'asc')->get();
+		$colors 	= Color::orderBy('color', 'asc')->get();
+		$sizes  	= Size::all();
+
+		return view('products.products', compact('products', 'brands', 'colors', 'sizes'));
+	}
+
+	/**
+	 * Display a listing of the products for the admin.
+	 *
+	 * @return Response
+	 */
+	public function productlist()
+	{
+		$products 	= Product::latest('created_at')->get();
+		$brands 	= Brand::orderBy('brand', 'asc')->get();
+		$colors 	= Color::orderBy('color', 'asc')->get();
+		$sizes  	= Size::all();
 
 		if (Auth::user()['user_type'] === 0)
 		{
@@ -30,7 +48,7 @@ class ProductsController extends Controller {
 		}
 		else
 		{
-			return view('products.products', compact('products'));
+			return view('products.products', compact('products', 'brands', 'colors', 'sizes'));
 		}
 	}
 
@@ -89,9 +107,11 @@ class ProductsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show()
-	{
-		return view('products.product');
+	public function show(Product $product)
+	{	
+		$products 	=	Product::latest('created_at')->get();
+
+		return view('products.product', compact('product', 'products'));
 	}
 
 	/**
@@ -163,9 +183,35 @@ class ProductsController extends Controller {
 	}
 
 	/**
+	 * Display a listing of the specifications for the products.
+	 *
+	 * @return Response
+	 */
+	public function specifications()
+	{
+		$categories = Category::orderBy('category', 'asc')->get();
+		$brands 	= Brand::lists('brand', 'id');
+		$materials 	= Material::lists('material', 'id');
+		$sizes		= Size::lists('size', 'id');
+		$colors		= Color::lists('color', 'id');
+
+		return view('products.specifications', compact('categories', 'brands', 'materials', 'sizes', 'colors'));
+	}
+
+	/**
+	 * Add a product category.
+	 *
+	 * @return Response
+	 */
+	public function addCategory()
+	{
+		return 'add een category';
+	}
+
+	/**
 	 * Save a new product
 	 * 
-	 * @param  ArticleRequest $request [description]
+	 * @param  ProductRequest $request [description]
 	 * @return [type]                  [description]
 	 */
 	private function createProduct(ProductRequest $request)

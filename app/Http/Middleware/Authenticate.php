@@ -39,7 +39,8 @@ class Authenticate {
 				return response('Unauthorized.', 401);
 			}
 			else
-			{
+			{	
+				flash()->error('Gelieve in te loggen om deze bewerking uit te voeren.');
 				return redirect()->guest('auth/login');
 			}
 		}
