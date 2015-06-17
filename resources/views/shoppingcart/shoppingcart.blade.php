@@ -8,12 +8,15 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<h1>Winkelmandje van {{ $user->name }} {{ $user->lastname }}</h1>
+		<h1>Winkelmandje van {{ $user->name }}</h1>
 		<hr>
 	</div>
 </div>
 
 @if (count($order))
+
+{!! Form::open(['url' => 'bestellingfinaliseren']) !!}
+
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="basket">
@@ -26,6 +29,7 @@
                                     <th>Prijs/stuk:</th>
                                     <th>Totaal:</th>
                                     <th>Maat:</th>
+                                    <th>kleur:</th>
                                     <th><a href="{{ url('/winkelmandje/delete/all') }}">Wis Alle</a></th>
                               </tr>
                         </thead>
@@ -37,7 +41,8 @@
                                     <td class="countpro">1</td>
                                     <td class="pricepro">€{{ $product->price }}</td>
                                     <td class="pricepro">€{{ $product->price }}</td>
-                                    <td>{!! Form::select('size_list[]', $sizes, null, ['id' => 'size_list', 'class' => 'form-control']) !!}</td>
+                                    <td>{!! Form::select('size_id', $product->sizes()->lists('size'), null, ['id' => 'size_id', 'class' => 'form-control']) !!}</td>
+                                    <td>{!! Form::select('color_id', $product->colors()->lists('color'), null, ['id' => 'color_id', 'class' => 'form-control']) !!}</td>
                                     <td><a href="{{ url('/winkelmandje/delete', $product->id) }}">Wis</a></td>
                               </tr>
                         @endforeach
@@ -53,13 +58,16 @@
                         </tfoot>
                   </table>
             </div>
-            <a href="{{ url('/bestellingfinaliseren') }}">
+                  
                   <button type="submit" class="btn btn-primary knop">Bestelling Finaliseren</button>
-            </a>
+
       </div>
 </div>
+
+{!! Form::close() !!}
+
 @else
-      <p>U heeft nog geen producten in uw winkelmandje.</p>
+      <p>U heeft nog geen producten in uw winkelmandje. Neem een kijkje naar onze <a href="{{ url('/producten') }}">producten.</a></p>
 @endif
 
 

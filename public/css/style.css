@@ -328,6 +328,16 @@ h1 {
   color: red;
 }
 
+.state
+{
+  font-style: italic;
+}
+
+.warning
+{
+  color: red;
+}
+
 .footer {
   position: absolute;
   bottom: 0;

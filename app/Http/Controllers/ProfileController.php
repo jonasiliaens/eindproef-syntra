@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 use App\User;
-use App\Address;
 use App\Town;
 use App\Country;
 use App\Http\Requests;
@@ -24,8 +23,7 @@ class ProfileController extends Controller {
 	 */
 	public function index()
 	{
-		$userId = Auth::user()->id;
-		$user = User::with('address')->find($userId);
+		$user = Auth::user();
 		$towns 	= Town::all()->lists('label', 'id');
 		$countries 	= Country::lists('country', 'id');
 
@@ -41,10 +39,8 @@ class ProfileController extends Controller {
 	 */
 	public function update(User $user, ProfileRequest $request)
 	{
-		$userId = Auth::user()->id;
-		$user = User::with('address')->find($userId);
+		$user = Auth::user();
 		$user->update($request->all());
-		$user->address->update($request['address']);
 
 		$name = Auth::user()->name;
 		

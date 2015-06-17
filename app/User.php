@@ -7,7 +7,9 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Address;
+use App\Order;
+use App\Town;
+use App\Country;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -25,7 +27,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'lastname', 'email', 'password', 'address_id'];
+	protected $fillable = ['name', 'lastname', 'email', 'password', 'street', 'number', 'box', 'town_id', 'country_id'];
 
 	/**
 	 * Set if you want to use softDelete or not.
@@ -43,15 +45,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
-	/**
-	 * A user has one address.
-	 * 
-	 * @return [type] [description]
-	 */
-	public function address()
-	{
-		return $this->hasOne('App\Address');
-	}
 
 	/**
 	 * A user can have many orders.
@@ -61,6 +54,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function orders()
 	{
 		return $this->hasMany('App\Order');
+	}
+
+	/**
+	 * A user is located in one town.
+	 * 
+	 * @return [type] [description]
+	 */
+	public function town()
+	{
+		return $this->belongsTo('App\Town');
+	}
+
+	/**
+	 * A user is located in one country.
+	 * 
+	 * @return [type] [description]
+	 */
+	public function country()
+	{
+		return $this->belongsTo('App\Country');
 	}
 
 }

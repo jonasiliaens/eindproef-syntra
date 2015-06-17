@@ -16,7 +16,8 @@ class CreateOrdersTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('user_id')->unsigned;
-			$table->integer('total');
+			$table->decimal('total', 6, 2);
+			$table->boolean('finalize');
 			$table->boolean('paid');
 			$table->boolean('sent');
 			$table->timestamps();
@@ -29,6 +30,9 @@ class CreateOrdersTable extends Migration {
 
 			$table->integer('order_id')->unsigned()->index();
 			$table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+
+			$table->integer('size_id')->unsigned();
+			$table->integer('color_id')->unsigned();
 
 			$table->timestamps();
 		});

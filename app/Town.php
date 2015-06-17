@@ -22,18 +22,17 @@ class Town extends Model {
 	];
 
 	/**
-	 * A Town has many addresses
+	 * A Town has many users.
 	 * 
 	 * @return [type] [description]
 	 */
-	public function addresses()
+	public function users()
 	{
-		return $this->hasMany('App\Address');
+		return $this->hasMany('App\User');
 	}
 
 	public function getLabelAttribute()
 	{
 	    return $this->postcode . ' ' . $this->town;
 	}
-
 }

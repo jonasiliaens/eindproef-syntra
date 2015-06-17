@@ -21,13 +21,13 @@ class Country extends Model {
 	];
 
 	/**
-	 * A Country has many addresses
+	 * A Country has many users.
 	 * 
 	 * @return [type] [description]
 	 */
-	public function addresses()
+	public function users()
 	{
-		return $this->hasMany('App\Address');
+		return $this->hasMany('App\User');
 	}
 
 }

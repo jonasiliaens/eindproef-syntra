@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\User;
 use App\Order;
 use App\Product;
 use App\Category;
@@ -21,6 +22,19 @@ class OrdersController extends Controller {
 	}
 
 	/**
+	 * Display a listing of all the orders from the authenticated user.
+	 *
+	 * @return Response
+	 */
+	public function orders()
+	{	
+		$user = Auth::user();
+		$orders = $user->orders()->get();
+
+		return view('users.orders', compact('user','orders'));
+	}
+
+	/**
 	 * Display a listing of all the products in the shoppingcart.
 	 *
 	 * @return Response
@@ -28,22 +42,29 @@ class OrdersController extends Controller {
 	public function shoppingcart()
 	{	
 		$user = Auth::user();
-		$orderId = Auth::user()->orders()->where('sent', 0)->get();
+		$orderId = Auth::user()->orders()->where('sent', 0)->where('paid', 0)->get();
 		
 		if (count($orderId))
 		{
-			$order = Order::where('user_id', '=', $user->id)->firstOrFail();
+			$order = Order::where('user_id', '=', $user->id)->where('sent', 0)->where('paid', 0)->firstOrFail();
 			$products = $order->products()->get();
-			$sizes = Size::lists('size', 'id');
-			$colors	= Color::lists('color', 'id');
+
+			if ($order->finalize === 0)
+			{
+				return view('shoppingcart.shoppingcart', compact('user', 'order', 'products'));
+			}
+			else
+			{
+				return view('shoppingcart.finalizeOrder', compact('user', 'order', 'products'));
+			}		
 		}
 		else
 		{
 			$order = null;
+			return view('shoppingcart.shoppingcart', compact('user', 'order', 'products'));
 		}
-		
 
-		return view('shoppingcart.shoppingcart', compact('user', 'order', 'products', 'sizes', 'colors'));
+		
 	}
 
 	/**
@@ -55,14 +76,14 @@ class OrdersController extends Controller {
 	public function addToShoppingcart($id)
 	{	
 		$userId = Auth::user()->id;
-		$orderId = Auth::user()->orders()->where('sent', 0)->get();
+		$orderId = Auth::user()->orders()->where('sent', 0)->where('paid', 0)->get();
 		$product = Product::find($id);
 
 		if (count($orderId))
 		{	
-			$order = Order::where('user_id', '=', $userId)->firstOrFail();
+			$order = Order::where('user_id', '=', $userId)->where('sent', 0)->where('paid', 0)->firstOrFail();
 
-			if (!$order->products->contains($product))
+			if ($order->finalize === 0)
 			{
 				$order->total = $order->total + $product->price;
 				$order->update();
@@ -72,7 +93,7 @@ class OrdersController extends Controller {
 			}
 			else
 			{
-				flash()->error($product->name . ' zit al in uw winkelmandje!');
+				flash()->error('Uw bestelling is al in finalisatie status, ga naar het winkelmandje om dit te veranderen!');
 			}
 			
 			return redirect('producten');
@@ -90,7 +111,6 @@ class OrdersController extends Controller {
 		}
 	}
 
-
 	/**
 	 * Remove all the products from the shoppingcart.
 	 *
@@ -100,7 +120,7 @@ class OrdersController extends Controller {
 	public function deleteAllFromShoppingcart()
 	{
 		$userId = Auth::user()->id;
-		$order = Order::where('user_id', '=', $userId)->firstOrFail();
+		$order = Order::where('user_id', '=', $userId)->where('sent', 0)->where('paid', 0)->firstOrFail();
 		$order->delete();
 
 		return redirect('winkelmandje');
@@ -115,10 +135,14 @@ class OrdersController extends Controller {
 	public function deleteFromShoppingcart($id)
 	{
 		$userId = Auth::user()->id;
-		$order = Order::where('user_id', '=', $userId)->firstOrFail();
+		$order = Order::where('user_id', '=', $userId)->where('sent', 0)->where('paid', 0)->firstOrFail();
+		$product = Product::find($id);
+
+		$order->total = $order->total - $product->price;
+		$order->update();
 		$order->products()->detach($id);
 
-		if (is_null($order->products()))
+		if (count($order->products) === 0)
 		{
 			$order->delete();
 			return redirect('winkelmandje');
@@ -126,63 +150,71 @@ class OrdersController extends Controller {
 		else
 		{
 			return redirect('winkelmandje');
-		}
-
+		}		
+	}
+	
+	/**
+	 * Finalize the order.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function finalizeOrder(Request $request)
+	{
+		$user = Auth::user();
+		$order = Order::where('user_id', '=', $user->id)->where('sent', 0)->where('paid', 0)->firstOrFail();
+		$order->finalize = true;
+		$order->update();
+		$products = $order->products()->get();
 		
+		return view('shoppingcart.finalizeOrder', compact('user', 'order', 'products'));
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-	/**
-	 * Display the specified resource.
+	 * Go back from finalize to the shoppingcart.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function backToShoppingcart($id)
 	{
-		//
+		$order = Order::find($id);
+		$order->finalize = false;
+		$order->update();
+		
+		return redirect('winkelmandje');
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
+	 * Bring the user to the payment confirmation screen.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function confirmPay($id)
 	{
-		//
+		$order = Order::find($id);
+		
+		return view('shoppingcart.confirmpay', compact('order'));
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Handle the payment of the order.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function payOrder($id)
 	{
-		//
+		$order = Order::find($id);
+		$order->paid = true;
+		$order->update();
+		
+		
+		return redirect('winkelmandje');
 	}
+
+
 
 	
 

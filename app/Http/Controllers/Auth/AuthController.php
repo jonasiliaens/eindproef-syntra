@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Address;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
@@ -62,10 +61,6 @@ class AuthController extends Controller {
 		}
 
 		$this->auth->login($this->registrar->create($request->all()));
-
-		$address = new Address;
-		$address->user_id = Auth::user()->id;
-		$address->save();
 
 		flash()->overlay('Welkom ' . $request['name'] . ', u bent succesvol geregistreerd!', "Welkom op Alive'n Kicking");
 

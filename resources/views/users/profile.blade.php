@@ -36,22 +36,22 @@
 <div class="row">
   <div class="col-md-4">
         <div class="form-group">
-          {!! Form::label('address[street]', 'Straat:') !!}
-          {!! Form::text('address[street]', null, ['class' => 'form-control']) !!}
+          {!! Form::label('street', 'Straat:') !!}
+          {!! Form::text('street', null, ['class' => 'form-control']) !!}
         </div>    
   </div>
 
   <div class="col-md-2">
         <div class="form-group">
-          {!! Form::label('address[number]', 'Nummer:') !!}
-          {!! Form::text('address[number]', null, ['class' => 'form-control']) !!}
+          {!! Form::label('number', 'Nummer:') !!}
+          {!! Form::text('number', null, ['class' => 'form-control']) !!}
         </div>    
   </div>
 
   <div class="col-md-2">
         <div class="form-group">
-          {!! Form::label('address[box]', 'Bus:') !!}
-          {!! Form::text('address[box]', null, ['class' => 'form-control']) !!}
+          {!! Form::label('box', 'Bus:') !!}
+          {!! Form::text('box', null, ['class' => 'form-control']) !!}
         </div>    
   </div>
 </div>
@@ -59,15 +59,15 @@
 <div class="row">
   <div class="col-md-4">
     <div class="form-group">
-      {!! Form::label('address[town_id]', 'Postcode en gemeente:') !!}
-      {!! Form::select('address[town_id]', $towns, null, ['id' => 'town_id', 'class' => 'form-control']) !!}
+      {!! Form::label('town_id', 'Postcode en gemeente:') !!}
+      {!! Form::select('town_id', $towns, null, ['id' => 'town_id', 'class' => 'form-control']) !!}
     </div>
   </div>
 
   <div class="col-md-4">
     <div class="form-group">
-      {!! Form::label('address[country_id]', 'Land:') !!}
-      {!! Form::select('address[country_id]', $countries, null, ['id' => 'country_id', 'class' => 'form-control']) !!}
+      {!! Form::label('country_id', 'Land:') !!}
+      {!! Form::select('country_id', $countries, null, ['id' => 'country_id', 'class' => 'form-control']) !!}
     </div>
   </div>
 </div>
@@ -80,6 +80,8 @@
     </div>
   </div>
 </div>
+
+{!! Form::close() !!}
 
 
 @endsection

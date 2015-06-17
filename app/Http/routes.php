@@ -42,10 +42,17 @@ Route::get('specifications/{id}', 'ProductsController@specifications');
 
 Route::resource('profiel', 'ProfileController');
 
+Route::get('/bestellingen', 'OrdersController@orders');
+
 Route::get('/winkelmandje', 'OrdersController@shoppingcart');
 Route::get('/winkelmandje/add/{id}', 'OrdersController@addToShoppingcart');
 Route::get('/winkelmandje/delete/all', 'OrdersController@deleteAllFromShoppingcart');
 Route::get('/winkelmandje/delete/{id}', 'OrdersController@deleteFromShoppingcart');
+Route::post('bestellingfinaliseren', 'OrdersController@finalizeOrder');
+Route::get('/terugnaarwinkelmandje/{id}', 'OrdersController@backToShoppingcart');
+Route::get('/betalingbevestigen/{id}', 'OrdersController@confirmPay');
+Route::get('/bestellingbetalen/{id}', 'OrdersController@payOrder');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

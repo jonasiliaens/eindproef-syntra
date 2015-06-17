@@ -23,7 +23,9 @@ class ProfileRequest extends Request {
 	{
 		return [
 			'name' 				=> 'required',
-			'lastname' 			=> 'required'
+			'lastname' 			=> 'required',
+			'street' 			=> 'required',
+			'number' 			=> 'required',
 		];
 	}
 
